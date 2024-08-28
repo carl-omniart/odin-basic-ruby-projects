@@ -2,7 +2,7 @@ require 'spec_helper.rb'
 require_relative '../lib/substrings.rb'
 
 
-RSpec.describe 'Substrings' do
+RSpec.describe 'Substrings Project' do
   DICTIONARY = %w(
     below down go going horn how howdy it i low own part partner sit
   )
