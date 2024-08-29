@@ -1,5 +1,7 @@
-require 'spec_helper.rb'
-require_relative '../lib/bubble_sort.rb'
+# frozen_string_literal: true
+
+require 'spec_helper'
+require_relative '../lib/bubble_sort'
 
 RSpec.describe 'Bubble Sort Project' do
   it 'sorts!' do

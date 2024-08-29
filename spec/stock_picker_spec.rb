@@ -1,10 +1,13 @@
-require 'spec_helper.rb'
-require_relative '../lib/stock_picker.rb'
+# frozen_string_literal: true
 
+require 'spec_helper'
+require_relative '../lib/stock_picker'
+
+# rubocop: disable Metrics/BlockLength
 
 RSpec.describe 'Stock Picker Project' do
   it 'returns an array' do
-    expect(stock_picker([1,2,3,4])).to be_an(Array)
+    expect(stock_picker([1, 2, 3, 4])).to be_an(Array)
   end
 
   context 'when lowest day comes first' do
@@ -85,3 +88,5 @@ RSpec.describe 'Stock Picker Project' do
     end
   end
 end
+
+# rubocop: enable Metrics/BlockLength
