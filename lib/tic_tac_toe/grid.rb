@@ -64,7 +64,7 @@ module TicTacToe
       rows = squares.map do |row|
         row.map { |square| square.nil? ? ' ' : square.to_s }.join '|'
       end
-      line = '-----'
+      line = '-+-+-'
       [rows[2], line, rows[1], line, rows[0]].join "\n"
     end
 

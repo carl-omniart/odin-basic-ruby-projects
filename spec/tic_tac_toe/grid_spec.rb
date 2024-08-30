@@ -31,13 +31,13 @@ RSpec.describe 'TicTacToe::Grid class' do
     moves.reduce(TicTacToe::Grid.new) { |grid, (x, y)| grid.draw x, y }
   end
 
-  describe '.new' do
+  describe '::new' do
     it 'returns an instance of TicTacToe::Grid' do
       expect(new_grid).to be_a(TicTacToe::Grid)
     end
   end
 
-  describe '.playing' do
+  describe '#playing' do
     it 'returns active player' do
       grid = new_grid
       expect(grid.playing).to eq(:x)
@@ -46,7 +46,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.waiting' do
+  describe '#waiting' do
     it 'returns inactive player' do
       grid = new_grid
       expect(grid.waiting).to eq(:o)
@@ -55,7 +55,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.squares' do
+  describe '#squares' do
     it 'returns a 3x3 array' do
       squares = new_grid.squares
       expect(squares.size).to eq(3)
@@ -63,7 +63,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.draw' do
+  describe '#draw' do
     it 'can draw symbol in square' do
       grid    = new_grid
       squares = grid.squares
@@ -92,7 +92,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.full?' do
+  describe '#full?' do
     it 'returns true if the grid is full' do
       expect(grids[:cats]).to be_full
     end
@@ -102,7 +102,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.winner?' do
+  describe '#winner?' do
     it 'return true if there is a winner' do
       expect(grids[:x_wins]).to be_winner
       expect(grids[:o_wins]).to be_winner
@@ -113,7 +113,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.cats?' do
+  describe '#cats?' do
     it 'returns true if grid is full with no winner' do
       expect(grids[:cats]).to be_cats
     end
@@ -125,7 +125,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.over?' do
+  describe '#over?' do
     it 'returns true if winner? or full?' do
       expect(grids[:cats]).to be_over
       expect(grids[:x_wins]).to be_over
@@ -137,7 +137,7 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.wins?(player)' do
+  describe '#wins?(player)' do
     it 'returns true if player has won' do
       expect(grids[:x_wins].wins?(:x)).to be(true)
       expect(grids[:o_wins].wins?(:o)).to be(true)
@@ -151,13 +151,13 @@ RSpec.describe 'TicTacToe::Grid class' do
     end
   end
 
-  describe '.to_s' do
+  describe '#to_s' do
     it 'displays a pretty grid' do
       pretty_grid = [
         'o|x|x',
-        '-----',
+        '-+-+-',
         'x|x|o',
-        '-----',
+        '-+-+-',
         'o|o|x'
       ].join "\n"
 
