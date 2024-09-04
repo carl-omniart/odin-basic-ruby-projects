@@ -4,42 +4,51 @@ module TicTacToe
   # TicTacToe::Grid is a big hashtag for competitive doodling
   class Grid
     SETS = [
-      [[0, 0], [0, 1], [0, 2]], # columns
-      [[1, 0], [1, 1], [1, 2]],
-      [[2, 0], [2, 1], [2, 2]],
-      [[0, 0], [1, 0], [2, 0]], # rows
-      [[0, 1], [1, 1], [2, 1]],
-      [[0, 2], [1, 2], [2, 2]],
-      [[0, 0], [1, 1], [2, 2]], # diagonals
-      [[2, 0], [1, 1], [0, 2]]
-    ].map { |set| set.each(&:freeze) }
+      [6, 7, 8], # rows
+      [3, 4, 5],
+      [0, 1, 2],
+      [8, 5, 2], # columns
+      [7, 4, 1],
+      [6, 3, 0],
+      [2, 4, 6], # diagonals
+      [0, 4, 8]
+    ].map(&:freeze)
 
-    def initialize(first_player = :x, second_player = :o)
-      @squares = Array.new(3) { Array.new(3) }
-      @playing = first_player
-      @waiting = second_player
-      @winner  = nil
+    def initialize(first_mark, second_mark)
+      @marks   = [first_mark, second_mark]
+      @squares = Array.new 9
     end
 
-    attr_reader :squares, :playing, :waiting, :winner
+    attr_reader :marks, :squares
 
-    # rubocop: disable Naming/MethodParameterName
-
-    def draw(x, y)
-      raise(StandardError, "Game's over, bud") if over?
-      return unless squares[y][x].nil?
-
-      squares[y][x] = playing
-
-      check_for_winner
-      next_turn
-      self
+    def active_mark
+      marks.first
     end
 
-    # rubocop: enable Naming/MethodParameterName
+    def empty_squares
+      squares.each_index.select { |index| squares[index].nil? }
+    end
+
+    def marked_squares
+      squares.each_index.reject { |index| squares[index].nil? }
+    end
+
+    def each_set
+      return enum_for(:each_set) unless block_given?
+
+      SETS.each { |set| yield set.map { |index| squares[index] } }
+    end
+
+    def winning_set
+      each_set.find { |set| marks.any? { |mark| set.all? mark } }
+    end
+
+    def winner
+      winning_set&.first
+    end
 
     def full?
-      squares.flatten.none?(&:nil?)
+      squares.all?
     end
 
     def winner?
@@ -54,30 +63,26 @@ module TicTacToe
       full? || winner?
     end
 
-    def wins?(player)
-      SETS.any? do |set|
-        set.all? { |x, y| squares[y][x] == player }
-      end
+    def draw(index)
+      raise(StandardError, "Game's over, bud") if over?
+      raise(StandardError, 'Occupied!') if squares[index]
+
+      squares[index] = active_mark
+      marks.reverse!
+      self
+    end
+
+    def to_a
+      squares.each_slice(3).to_a
     end
 
     def to_s
-      rows = squares.map do |row|
-        row.map { |square| square.nil? ? ' ' : square.to_s }.join '|'
-      end
-      line = '-+-+-'
-      [rows[2], line, rows[1], line, rows[0]].join "\n"
-    end
-
-    private
-
-    def check_for_winner
-      [playing, waiting].each { |player| @winner = player if wins?(player) }
-      winner
-    end
-
-    def next_turn
-      @playing, @waiting = @waiting, @playing
-      self
+      squares
+        .map { |square| square ? square.to_s : ' ' }
+        .each_slice(3)
+        .map { |row| row.join '|' }
+        .reverse # => ['6|7|8', '3|4|5', '0|1|2']
+        .join("\n-+-+-\n")
     end
   end
 end

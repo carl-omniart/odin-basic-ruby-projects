@@ -7,8 +7,8 @@ RSpec.describe 'TicTacToe::Game class' do
   let(:new_game) { TicTacToe::Game.new }
 
   describe '::new' do
-    it 'returns an instance of TicTacToe::Game' do
-      expect(new_game).to be_a(TicTacToe::Game)
+    it 'should return an instance of itself when new' do
+      expect(TicTacToe::Game.new).to be_a(TicTacToe::Game)
     end
   end
 end
