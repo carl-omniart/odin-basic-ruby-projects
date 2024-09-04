@@ -3,7 +3,7 @@
 require 'io/console'
 
 module TicTacToe
-  # IO controls input/output interactions with user.
+  # TicTacToe::IO controls input/output interactions with user.
   class IO
     class << self
       def clear_control_chars(string)

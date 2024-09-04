@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TicTacToe
-  # Controller ...
+  # TicTacToe::Game mediates between IO and Grid and has the main game loop
   class Game
     POSTS = {
       welcome: [
