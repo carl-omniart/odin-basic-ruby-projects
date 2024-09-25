@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 require_relative '../../lib/mastermind/player'
-require_relative '../../lib/mastermind/rules'
+require_relative '../../lib/mastermind/computer_player'
 
 # rubocop: disable Metrics/BlockLength
 
-RSpec.describe 'Mastermind::Player class' do
+RSpec.describe 'Mastermind::HumanPlayer class' do
   it 'takes a name' do
     player      = Mastermind::Player.new
     player.name = 'Simon'

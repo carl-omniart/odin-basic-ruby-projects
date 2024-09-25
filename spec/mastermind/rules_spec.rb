@@ -6,7 +6,7 @@ require_relative '../../lib/mastermind/rules'
 # rubocop: disable Metrics/BlockLength
 
 RSpec.describe 'Mastermind::Rules class' do
-  xit 'takes a set of code pegs' do
+  it 'takes a set of code pegs' do
     trumpets = %i[louis dizzy miles clifford lee freddie]
     saxes    = %i[lester bird sonny coltrane cannonball wayne]
 
@@ -15,11 +15,11 @@ RSpec.describe 'Mastermind::Rules class' do
     rules.code_pegs = trumpets
     expect(rules.code_pegs).to match_array(trumpets)
 
-    rules = Mastermind::Board.new code_pegs: saxes
+    rules = Mastermind::Rules.new code_pegs: saxes
     expect(rules.code_pegs).to match_array(saxes)
   end
 
-  xit 'takes a number of holes' do
+  it 'takes a number of holes' do
     rules = Mastermind::Rules.new
 
     rules.holes = 13
@@ -29,39 +29,39 @@ RSpec.describe 'Mastermind::Rules class' do
     expect(rules.holes).to eq(42)
   end
 
-  xit 'permits or rejects duplicates' do
+  it 'permits or rejects duplicates' do
     rules = Mastermind::Rules.new
 
     rules.no_duplicates!
-    expect(rules.duplicates?).to be_false
+    expect(rules.duplicates?).to eq(false)
 
     rules.duplicates!
-    expect(rules.duplicates?).to be_true
+    expect(rules.duplicates?).to eq(true)
 
     rules = Mastermind::Rules.new duplicates: true
-    expect(rules.duplicates?).to be_true
+    expect(rules.duplicates?).to eq(true)
 
     rules = Mastermind::Rules.new duplicates: false
-    expect(rules.duplicates?).to be_false
+    expect(rules.duplicates?).to eq(false)
   end
 
-  xit 'permits or rejects blanks' do
+  it 'permits or rejects blanks' do
     rules = Mastermind::Rules.new
 
     rules.blanks!
-    expect(rules.blanks?).to be_true
+    expect(rules.blanks?).to eq(true)
 
     rules.no_blanks!
-    expect(rules.blanks?).to be_false
+    expect(rules.blanks?).to eq(false)
 
     rules = Mastermind::Rules.new blanks: true
-    expect(rules.blanks?).to be_true
+    expect(rules.blanks?).to eq(true)
 
     rules = Mastermind::Rules.new blanks: false
-    expect(rules.blanks?).to be_false
+    expect(rules.blanks?).to eq(false)
   end
 
-  xit 'it takes a number of guesses' do
+  it 'it takes a number of guesses' do
     rules = Mastermind::Rules.new
 
     rules.guesses = 7
@@ -72,23 +72,23 @@ RSpec.describe 'Mastermind::Rules class' do
   end
 
   context 'by default' do
-    xit 'has six colors for code pegs' do
+    it 'has six colors for code pegs' do
       colors = %i[red orange yellow green blue purple]
       expect(Mastermind::Rules.new.code_pegs).to match_array(colors)
     end
-    xit 'has four holes' do
+    it 'has four holes' do
       expect(Mastermind::Rules.new.holes).to eq(4)
     end
 
-    xit 'accepts duplicates' do
-      expect(Mastermind::Rules.new.duplicates?).to be_true
+    it 'accepts duplicates' do
+      expect(Mastermind::Rules.new.duplicates?).to eq(true)
     end
 
-    xit 'rejects blanks' do
-      expect(Mastermind::Rules.new.blanks?).to be_false
+    it 'rejects blanks' do
+      expect(Mastermind::Rules.new.blanks?).to eq(false)
     end
 
-    xit 'has 12 guesses' do
+    it 'has 12 guesses' do
       expect(Mastermind::Rules.new.guesses).to eq(12)
     end
   end
